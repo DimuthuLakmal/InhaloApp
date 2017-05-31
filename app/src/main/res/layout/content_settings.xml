@@ -188,6 +188,19 @@
                     android:textColor="@android:color/white"
                     android:background="?android:attr/selectableItemBackground"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Your Medicines"
+                    android:id="@+id/addMedicinesButton"
+                    android:textColor="@android:color/white"
+                    android:background="?android:attr/selectableItemBackground"/>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

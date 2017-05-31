@@ -14,13 +14,13 @@ import java.util.ArrayList;
 /**
  * Created by kjtdi on 5/31/2017.
  */
-public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+public class AddMedicineAdapter extends BaseAdapter implements ListAdapter {
+    private ArrayList<String[]> list = new ArrayList<String[]>();
     private Context context;
 
 
 
-    public AddAlergyAdapter(ArrayList<String> list, Context context) {
+    public AddMedicineAdapter(ArrayList<String[]> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -46,12 +46,16 @@ public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.allergy_list_view, null);
+            view = inflater.inflate(R.layout.medicine_list_view, null);
         }
 
         //Handle TextView and display string from your list
-        TextView listAllergyName = (TextView)view.findViewById(R.id.list_allergy_name);
-        listAllergyName.setText(list.get(position));
+        TextView listMedicineName = (TextView)view.findViewById(R.id.list_medicine_name);
+        listMedicineName.setText(list.get(position)[0]);
+
+        TextView listMedicineAlterName = (TextView)view.findViewById(R.id.list_medicine_alter_name);
+        listMedicineAlterName.setText(list.get(position)[1]);
+
 
         return view;
     }

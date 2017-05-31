@@ -40,7 +40,11 @@
             android:label="@string/title_activity_add_sharing_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddAllergies" />
-        <activity android:name=".SendReportActivity"></activity>
+        <activity android:name=".SendReportActivity" />
+        <activity android:name=".AddInhalersActivity" />
+        <activity android:name=".AddRescueMedicineActivity" />
+        <activity android:name=".AddControllerMedicineActivity" />
+        <activity android:name=".SaveMedicineActivity"></activity>
     </application>
 
 </manifest>

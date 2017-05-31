@@ -25,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     Button highestFEVButton;
     Button addSharingDetailsButton;
     Button addAllergyDetailsButton;
+    Button addMedicinesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         highestPEFButton = (Button)findViewById(R.id.highestPeakFlowButton);
         addSharingDetailsButton = (Button)findViewById(R.id.addSharingDetailsButton);
         addAllergyDetailsButton = (Button)findViewById(R.id.addAllergyDetailsButton);
+        addMedicinesButton = (Button)findViewById(R.id.addMedicinesButton);
 
 
         highestPEFButton.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +65,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
                 Intent addAllergyDetails = new Intent(SettingsActivity.this, AddAllergies.class);
                 startActivity(addAllergyDetails);
+            }
+        });
+
+        addMedicinesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addInhalerActivity = new Intent(SettingsActivity.this, AddInhalersActivity.class);
+                startActivity(addInhalerActivity);
             }
         });
 

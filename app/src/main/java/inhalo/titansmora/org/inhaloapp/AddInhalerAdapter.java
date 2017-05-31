@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -14,13 +13,12 @@ import java.util.ArrayList;
 /**
  * Created by kjtdi on 5/31/2017.
  */
-public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
+public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
 
 
-
-    public AddAlergyAdapter(ArrayList<String> list, Context context) {
+    public AddInhalerAdapter(ArrayList<String> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -46,11 +44,11 @@ public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.allergy_list_view, null);
+            view = inflater.inflate(R.layout.inhaler_list_view, null);
         }
 
         //Handle TextView and display string from your list
-        TextView listAllergyName = (TextView)view.findViewById(R.id.list_allergy_name);
+        TextView listAllergyName = (TextView) view.findViewById(R.id.list_inhaler_name);
         listAllergyName.setText(list.get(position));
 
         return view;

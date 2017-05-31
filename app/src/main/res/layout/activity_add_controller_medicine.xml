@@ -20,7 +20,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="433dp"
-            android:id="@+id/add_allergy_list"
+            android:id="@+id/medicine_list"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
@@ -34,9 +34,9 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/saveButton"
-            android:layout_below="@+id/add_allergy_list"
+            android:text="Next"
+            android:id="@+id/medicine_next_button"
+            android:layout_below="@+id/medicine_list"
             android:textColor="@android:color/white"
             android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>

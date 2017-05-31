@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:id="@+id/list_inhaler_name"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="16dp"
+            android:text="Test"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true">
+
+        <CheckBox
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="121dp"
+            android:layout_marginRight="50dp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
