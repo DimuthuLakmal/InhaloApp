@@ -11,4 +11,5 @@
     <string name="title_activity_highest_flow_measure">HighestFlowMeasure</string>
     <string name="title_activity_highest_flow">HighestFlow</string>
     <string name="title_activity_add_sharing_details">AddSharingDetails</string>
+    <string name="title_activity_daily_questions">DailyQuestionsActivity</string>
 </resources>

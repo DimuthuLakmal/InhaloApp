@@ -44,7 +44,11 @@
         <activity android:name=".AddInhalersActivity" />
         <activity android:name=".AddRescueMedicineActivity" />
         <activity android:name=".AddControllerMedicineActivity" />
-        <activity android:name=".SaveMedicineActivity"></activity>
+        <activity android:name=".SaveMedicineActivity" />
+        <activity
+            android:name=".DailyQuestionsActivity"
+            android:label="@string/title_activity_daily_questions"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

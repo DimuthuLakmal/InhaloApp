@@ -82,7 +82,12 @@ public class HomeActivity extends AppCompatActivity
             Intent settings = new Intent(HomeActivity.this, SettingsActivity.class);
             startActivity(settings);
 
-        } 
+        } else if (id == R.id.nav_daily_details) {
+
+            Intent dailyDetails = new Intent(HomeActivity.this, DailyQuestionsActivity.class);
+            startActivity(dailyDetails);
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
