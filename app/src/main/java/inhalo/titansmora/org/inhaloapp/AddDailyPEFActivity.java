@@ -1,9 +1,10 @@
 package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,55 +19,56 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HighestPEFFlow extends AppCompatActivity {
+public class AddDailyPEFActivity extends AppCompatActivity {
 
     Button saveButton;
 
-    EditText bestPEFText;
+    EditText dailyPEFText;
 
     private ProgressDialog progressDialog;
 
     String userId;
-    String bestPEF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_highest_pef_flow);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_add_daily_pef);
 
         saveButton = (Button)findViewById(R.id.savePEFButton);
 
-        bestPEFText = (EditText)findViewById(R.id.highestpefText);
+        dailyPEFText = (EditText)findViewById(R.id.dailypefText);
 
         userId = getIntent().getStringExtra("userId");
-        bestPEF = getIntent().getStringExtra("best_pef");
 
-        bestPEFText.setText(bestPEF+" l/min");
+        dailyPEFText.setText(getIntent().getStringExtra("daily_pef")+" l/min");
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addPEFDetails(bestPEFText.getText().toString().split(" ")[0]);
+                addPEFDetails(dailyPEFText.getText().toString().split(" ")[0]);
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("daily_pef", dailyPEFText.getText().toString().split(" ")[0]);
+                editor.commit();
             }
         });
 
         progressDialog = new ProgressDialog(this);
-
-
     }
 
     public void addPEFDetails(final String pef) {
 
-        progressDialog.setMessage("Updating PEF Data...");
+        progressDialog.setMessage("Updating Daily PEF Data...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                HTTPConstants.URL_UPDATE_HIGHESTPEF_USER_DATA,
+                HTTPConstants.URL_ADD_DAILY_DATA_PEF,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -92,14 +94,18 @@ public class HighestPEFFlow extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
+                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+                Date now = new Date();
+                String date = sdfDate.format(now);
+
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId);
-                params.put("best_pef", pef);
+                params.put("pef", pef);
+                params.put("date", date);
                 return params;
             }
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
-
 }

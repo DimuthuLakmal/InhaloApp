@@ -1,11 +1,8 @@
 package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,61 +20,68 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddInhalersActivity extends AppCompatActivity {
-
-    Button nextButton;
+public class AddAllergiesActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
     ArrayList<String[]> list;
-    AddInhalerAdapter adapter;
+    AddAlergyAdapter adapter;
 
     String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_inhalers);
+        setContentView(R.layout.activity_add_allergies);
 
         userId = getIntent().getStringExtra("userId");
 
-        nextButton = (Button)findViewById(R.id.inhaler_next_button);
         //generate list
-        list = new ArrayList<String[]>();;
-        String[] mdi = new String[]{"Metered Dose Inhaler", "false"};
-        String[] mdiSpacer = new String[]{"MDI with Spacer", "false"};
-        String[] dpi = new String[]{"Dry Powder Inhaler", "false"};
+        list = new ArrayList<String[]>();
+        String[] animalDander = new String[]{"Animal Dander","false"};
+        String[] cockroaches = new String[]{"Cockroaches","false"};
+        String[] dustMites = new String[]{"Dust Mites","false"};
+        String[] indoorMolds = new String[]{"Indoor Mold","false"};
+        String[] medicines = new String[]{"Medicines","false"};
+        String[] pollen = new String[]{"Pollen and Outdoor Mold","false"};
+        String[] pollution = new String[]{"Pollution","false"};
+        String[] smoke = new String[]{"Smoke","false"};
+        String[] strongOrdor = new String[]{"Strong Odor","false"};
+        String[] vaccumCleaning = new String[]{"Vaccum Cleaning","false"};
+        String[] viralIllness = new String[]{"Viral Illness","false"};
+        String[] weather = new String[]{"Weather","false"};
 
-        list.add(mdi);
-        list.add(mdiSpacer);
-        list.add(dpi);
+        list.add(animalDander);
+        list.add(cockroaches);
+        list.add(dustMites);
+        list.add(indoorMolds);
+        list.add(medicines);
+        list.add(pollen);
+        list.add(pollution);
+        list.add(smoke);
+        list.add(strongOrdor);
+        list.add(vaccumCleaning);
+        list.add(viralIllness);
+        list.add(weather);
 
         //instantiate custom adapter
-        adapter = new AddInhalerAdapter(list, this);
+        adapter = new AddAlergyAdapter(list, this);
 
         //handle listview and assign adapter
-        ListView lView = (ListView)findViewById(R.id.inhaler_list);
+        ListView lView = (ListView)findViewById(R.id.add_allergy_list);
         lView.setAdapter(adapter);
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent rescueMedicineIntent = new Intent(AddInhalersActivity.this, AddRescueMedicineActivity.class);
-                startActivity(rescueMedicineIntent);
-            }
-        });
 
         progressDialog = new ProgressDialog(this);
 
-        retreiveInhalers();
+        retreiveAllergies();
     }
 
-    public void addInhalerDetails(final String inhaler) {
+    public void addAllergenDetails(final String allergen) {
 
-        progressDialog.setMessage("Adding Inhaler Data...");
+        progressDialog.setMessage("Adding Allergy Data...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                HTTPConstants.URL_ADD_INHALER,
+                HTTPConstants.URL_ADD_ALLERGENS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -105,7 +109,7 @@ public class AddInhalersActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId);
-                params.put("type", inhaler);
+                params.put("allergen", allergen);
                 return params;
             }
         };
@@ -114,28 +118,28 @@ public class AddInhalersActivity extends AppCompatActivity {
 
     }
 
-    private void retreiveInhalers() {
+    private void retreiveAllergies() {
 
-        progressDialog.setMessage("Retreiving Inhaler data...");
+        progressDialog.setMessage("Retreiving Allergy data...");
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                HTTPConstants.URL_RETREIVE_INHALER + userId,
+                HTTPConstants.URL_RETREIVE_ALLERGENS + userId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
 
                         try {
-                            JSONArray inhalers = new JSONObject(response).getJSONArray("inhalers");
+                            JSONArray allergens = new JSONObject(response).getJSONArray("allergens");
 
-                            for(int i=0,size = inhalers.length(); i < size; i++) {
-                                JSONObject selectedInhaler = inhalers.getJSONObject(i);
+                            for(int i=0,size = allergens.length(); i < size; i++) {
+                                JSONObject selectedAllergen = allergens.getJSONObject(i);
 
                                 int index = 0;
-                                for(String[] inhaler: list) {
-                                    if(inhaler[0].equals(selectedInhaler.getString("type"))) {
-                                        String[] inhalerChecked = new String[]{inhaler[0],"true"};
-                                        list.set(index, inhalerChecked);
+                                for(String[] allergen: list) {
+                                    if(allergen[0].equals(selectedAllergen.getString("allergen"))) {
+                                        String[] allergyChecked = new String[]{allergen[0],"true"};
+                                        list.set(index, allergyChecked);
                                     }
                                     index++;
                                 }
@@ -160,13 +164,13 @@ public class AddInhalersActivity extends AppCompatActivity {
 
     }
 
-    public void deleteInhalerDetails(final String inhaler) {
+    public void deleteAllergyDetails(final String allergen) {
 
-        progressDialog.setMessage("Deleting Inhaler Data...");
+        progressDialog.setMessage("Deleting Allergy Data...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                HTTPConstants.URL_DELETE_INHALER,
+                HTTPConstants.URL_DELETE_ALLERGENS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -193,7 +197,7 @@ public class AddInhalersActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("type", inhaler);
+                params.put("allergen", allergen);
                 params.put("userId", userId);
                 return params;
             }

@@ -43,8 +43,8 @@
                     android:inputType="textPassword"
                     android:hint="Enter Your Password"
                     android:ems="10"
-                    android:id="@+id/passwordText"
-                    android:layout_below="@+id/passwordRegText" />
+                    android:id="@+id/passwordRegText"
+                    android:layout_below="@+id/usernameRegText" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

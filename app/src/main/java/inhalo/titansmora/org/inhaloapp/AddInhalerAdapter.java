@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -14,11 +15,11 @@ import java.util.ArrayList;
  * Created by kjtdi on 5/31/2017.
  */
 public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
-    private Context context;
+    private ArrayList<String[]> list = new ArrayList<String[]>();
+    private AddInhalersActivity context;
 
 
-    public AddInhalerAdapter(ArrayList<String> list, Context context) {
+    public AddInhalerAdapter(ArrayList<String[]> list, AddInhalersActivity context) {
         this.list = list;
         this.context = context;
     }
@@ -48,8 +49,28 @@ public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listAllergyName = (TextView) view.findViewById(R.id.list_inhaler_name);
-        listAllergyName.setText(list.get(position));
+        final TextView listInhalerName = (TextView) view.findViewById(R.id.list_inhaler_name);
+        listInhalerName.setText(list.get(position)[0]);
+
+        final CheckBox inhalerCheckBox = (CheckBox)view.findViewById(R.id.inhalerCheckBox);
+        if(list.get(position)[1].equals("true")) {
+            inhalerCheckBox.setChecked(true);
+        } else {
+            inhalerCheckBox.setChecked(false);
+        }
+
+        inhalerCheckBox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if (inhalerCheckBox.isChecked()) {
+                    context.addInhalerDetails(listInhalerName.getText().toString());
+                } else {
+                    context.deleteInhalerDetails(listInhalerName.getText().toString());
+                }
+            }
+        });
 
         return view;
     }

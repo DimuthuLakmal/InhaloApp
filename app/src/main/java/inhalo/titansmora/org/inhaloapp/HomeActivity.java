@@ -1,7 +1,9 @@
 package inhalo.titansmora.org.inhaloapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,9 +15,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.Serializable;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private String userId;
+
+    TextView dailyPEFText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +44,14 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        dailyPEFText = (TextView)findViewById(R.id.dailypefText);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String dailyPEF = prefs.getString("daily_pef", "0.00");
+        dailyPEFText.setText(dailyPEF+" L/min");
+
+        userId = getIntent().getStringExtra("userId");
     }
 
     @Override
@@ -80,11 +100,13 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
             Intent settings = new Intent(HomeActivity.this, SettingsActivity.class);
+            settings.putExtra("userId", userId);
             startActivity(settings);
 
         } else if (id == R.id.nav_daily_details) {
 
             Intent dailyDetails = new Intent(HomeActivity.this, DailyQuestionsActivity.class);
+            dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
         }

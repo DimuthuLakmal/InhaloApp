@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * Created by kjtdi on 5/31/2017.
  */
 public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
-    private Context context;
+    private ArrayList<String[]> list = new ArrayList<String[]>();
+    private AddAllergiesActivity context;
 
 
 
-    public AddAlergyAdapter(ArrayList<String> list, Context context) {
+    public AddAlergyAdapter(ArrayList<String[]> list, AddAllergiesActivity context) {
         this.list = list;
         this.context = context;
     }
@@ -50,9 +50,28 @@ public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listAllergyName = (TextView)view.findViewById(R.id.list_allergy_name);
-        listAllergyName.setText(list.get(position));
+        final TextView listAllergyName = (TextView)view.findViewById(R.id.list_allergy_name);
+        listAllergyName.setText(list.get(position)[0]);
 
+        final CheckBox allergyCheckBox = (CheckBox)view.findViewById(R.id.allergyCheckBox);
+        if(list.get(position)[1].equals("true")) {
+            allergyCheckBox.setChecked(true);
+        } else {
+            allergyCheckBox.setChecked(false);
+        }
+
+        allergyCheckBox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(allergyCheckBox.isChecked()){
+                    context.addAllergenDetails(listAllergyName.getText().toString());
+                }else{
+                    context.deleteAllergyDetails(listAllergyName.getText().toString());
+                }
+            }
+        });
         return view;
     }
 }

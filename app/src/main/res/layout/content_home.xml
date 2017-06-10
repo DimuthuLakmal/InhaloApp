@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="5.06 L/min"
-                    android:id="@+id/textView3"
+                    android:id="@+id/dailypefText"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"/>
             </LinearLayout>
