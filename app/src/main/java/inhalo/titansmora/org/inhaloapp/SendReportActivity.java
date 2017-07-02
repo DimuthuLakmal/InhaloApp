@@ -6,6 +6,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import inhalo.titansmora.org.inhaloapp.adapters.SendReportAdapter;
+
 public class SendReportActivity extends AppCompatActivity {
 
     @Override

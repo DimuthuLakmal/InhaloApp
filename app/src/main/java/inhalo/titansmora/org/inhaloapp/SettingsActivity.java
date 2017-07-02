@@ -30,6 +30,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
+
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView dobText;

@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import inhalo.titansmora.org.inhaloapp.adapters.AddAlergyAdapter;
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
+
 public class AddAllergiesActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;

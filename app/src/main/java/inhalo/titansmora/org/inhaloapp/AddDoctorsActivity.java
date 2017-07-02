@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import inhalo.titansmora.org.inhaloapp.adapters.AddDoctorAdapter;
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
+
 public class AddDoctorsActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;

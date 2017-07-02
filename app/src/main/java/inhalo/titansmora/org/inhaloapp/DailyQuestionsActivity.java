@@ -3,8 +3,6 @@ package inhalo.titansmora.org.inhaloapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,11 +21,13 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
 
 public class DailyQuestionsActivity extends AppCompatActivity {
 

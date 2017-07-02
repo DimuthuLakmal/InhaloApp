@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +13,9 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import inhalo.titansmora.org.inhaloapp.AddDoctorsActivity;
+import inhalo.titansmora.org.inhaloapp.R;
 
 /**
  * Created by kjtdi on 6/17/2017.

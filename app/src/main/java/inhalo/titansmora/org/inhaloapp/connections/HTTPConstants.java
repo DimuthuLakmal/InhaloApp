@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.connections;
 
 /**
  * Created by kjtdi on 6/8/2017.

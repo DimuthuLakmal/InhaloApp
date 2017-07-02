@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import inhalo.titansmora.org.inhaloapp.R;
 
 /**
  * Created by kjtdi on 5/31/2017.

@@ -21,9 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
 
 public class MainActivity extends AppCompatActivity {
 

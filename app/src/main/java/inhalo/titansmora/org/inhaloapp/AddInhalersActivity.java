@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import inhalo.titansmora.org.inhaloapp.adapters.AddInhalerAdapter;
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
+
 public class AddInhalersActivity extends AppCompatActivity {
 
     Button nextButton;

@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,16 +11,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import inhalo.titansmora.org.inhaloapp.AddInhalersActivity;
+import inhalo.titansmora.org.inhaloapp.R;
+
 /**
  * Created by kjtdi on 5/31/2017.
  */
-public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
+public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String[]> list = new ArrayList<String[]>();
-    private AddAllergiesActivity context;
+    private AddInhalersActivity context;
 
 
-
-    public AddAlergyAdapter(ArrayList<String[]> list, AddAllergiesActivity context) {
+    public AddInhalerAdapter(ArrayList<String[]> list, AddInhalersActivity context) {
         this.list = list;
         this.context = context;
     }
@@ -46,32 +48,33 @@ public class AddAlergyAdapter extends BaseAdapter implements ListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.allergy_list_view, null);
+            view = inflater.inflate(R.layout.inhaler_list_view, null);
         }
 
         //Handle TextView and display string from your list
-        final TextView listAllergyName = (TextView)view.findViewById(R.id.list_allergy_name);
-        listAllergyName.setText(list.get(position)[0]);
+        final TextView listInhalerName = (TextView) view.findViewById(R.id.list_inhaler_name);
+        listInhalerName.setText(list.get(position)[0]);
 
-        final CheckBox allergyCheckBox = (CheckBox)view.findViewById(R.id.allergyCheckBox);
+        final CheckBox inhalerCheckBox = (CheckBox)view.findViewById(R.id.inhalerCheckBox);
         if(list.get(position)[1].equals("true")) {
-            allergyCheckBox.setChecked(true);
+            inhalerCheckBox.setChecked(true);
         } else {
-            allergyCheckBox.setChecked(false);
+            inhalerCheckBox.setChecked(false);
         }
 
-        allergyCheckBox.setOnClickListener(new View.OnClickListener() {
+        inhalerCheckBox.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if(allergyCheckBox.isChecked()){
-                    context.addAllergenDetails(listAllergyName.getText().toString());
-                }else{
-                    context.deleteAllergyDetails(listAllergyName.getText().toString());
+                if (inhalerCheckBox.isChecked()) {
+                    context.addInhalerDetails(listInhalerName.getText().toString());
+                } else {
+                    context.deleteInhalerDetails(listInhalerName.getText().toString());
                 }
             }
         });
+
         return view;
     }
 }

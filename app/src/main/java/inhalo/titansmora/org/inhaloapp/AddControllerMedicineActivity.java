@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import inhalo.titansmora.org.inhaloapp.adapters.AddMedicineAdapter;
+
 public class AddControllerMedicineActivity extends AppCompatActivity {
 
     Button nextButton;

@@ -24,6 +24,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import inhalo.titansmora.org.inhaloapp.connections.HTTPConstants;
+import inhalo.titansmora.org.inhaloapp.connections.RequestHandler;
+
 public class AddDailyPEFActivity extends AppCompatActivity {
 
     Button saveButton;

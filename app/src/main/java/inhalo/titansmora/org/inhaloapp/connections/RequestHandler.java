@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.connections;
 
 import android.content.Context;
 

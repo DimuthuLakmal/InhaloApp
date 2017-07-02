@@ -1,4 +1,4 @@
-package inhalo.titansmora.org.inhaloapp;
+package inhalo.titansmora.org.inhaloapp.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +25,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import inhalo.titansmora.org.inhaloapp.AddSharingDetails;
+import inhalo.titansmora.org.inhaloapp.R;
 
 /**
  * Created by kjtdi on 5/29/2017.
