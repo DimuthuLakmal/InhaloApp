@@ -51,7 +51,8 @@
             android:name=".DailyQuestionsActivity"
             android:label="@string/title_activity_daily_questions"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddDailyPEFActivity"></activity>
+        <activity android:name=".AddDailyPEFActivity" />
+        <activity android:name=".AddDoctorsActivity"></activity>
     </application>
 
 </manifest>

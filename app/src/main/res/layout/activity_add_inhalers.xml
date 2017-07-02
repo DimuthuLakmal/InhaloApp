@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:visibility="invisible">
 
         <Button
             android:layout_width="match_parent"
@@ -38,6 +39,7 @@
             android:id="@+id/inhaler_next_button"
             android:layout_below="@+id/inhaler_list"
             android:textColor="@android:color/white"
-            android:background="?android:attr/selectableItemBackground" />
+            android:background="?android:attr/selectableItemBackground"
+            />
     </LinearLayout>
 </RelativeLayout>

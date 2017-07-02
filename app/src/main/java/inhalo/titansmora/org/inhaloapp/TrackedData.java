@@ -1,5 +1,6 @@
 package inhalo.titansmora.org.inhaloapp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,26 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class TrackedData extends AppCompatActivity{
 
@@ -37,6 +58,17 @@ public class TrackedData extends AppCompatActivity{
     private ViewPager mViewPager;
     private static Context context;
 
+    private ProgressDialog progressDialog;
+
+    private String userId;
+
+    static ArrayList<Entry> entries;
+    static ArrayList<Entry> entriesTwoMonth;
+    static ArrayList<String> lastMonthDates;
+    static ArrayList<String> lastTwoMonthDates;
+    static ArrayList<String> lastTwoMonthSums;
+    static ArrayList<String> lastMonthSums;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +85,18 @@ public class TrackedData extends AppCompatActivity{
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         context = TrackedData.this;
+
+        userId = getIntent().getStringExtra("userId");
+
+        progressDialog = new ProgressDialog(this);
+
+        Bundle bundle = getIntent().getExtras();
+        entries = bundle.getParcelableArrayList("entries");
+        entriesTwoMonth = bundle.getParcelableArrayList("entriesTwoMonth");
+        lastMonthDates = bundle.getStringArrayList("lastMonthDates");
+        lastTwoMonthDates = bundle.getStringArrayList("lastTwoMonthDates");
+        lastMonthSums = bundle.getStringArrayList("lastMonthSums");
+        lastTwoMonthSums = bundle.getStringArrayList("lastTwoMonthSums");
     }
 
 
@@ -108,10 +152,141 @@ public class TrackedData extends AppCompatActivity{
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_tracked_data, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            TextView wheezeText = (TextView) rootView.findViewById(R.id.wheezeText);
+            TextView coughText = (TextView) rootView.findViewById(R.id.coughText);
+            TextView coldText = (TextView) rootView.findViewById(R.id.coldText);
+            TextView sputmText = (TextView) rootView.findViewById(R.id.sputumText);
+            TextView chestText = (TextView) rootView.findViewById(R.id.chestText);
+            TextView physicalActText = (TextView) rootView.findViewById(R.id.physicalAcvitiesText);
+            TextView shortBreathText = (TextView) rootView.findViewById(R.id.shortBreathText);
+            TextView nebulizedText = (TextView) rootView.findViewById(R.id.nebulizedText);
+            TextView sleepText = (TextView) rootView.findViewById(R.id.botherSleepText);
+
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                textView.setText("Last Week");
+                textView.setText(lastMonthDates.get(0).replace('-','/')+" - "+lastMonthDates.get(lastMonthDates.size()-1).replace('-', '/')+" (Last Month)");
+
+                LineChart pefChart = (LineChart)rootView.findViewById(R.id.pefChart);
+
+                LineDataSet dataSet = new LineDataSet(entries, "PEF");
+                dataSet.setDrawCircles(false);
+                LineData lineData = new LineData(dataSet);
+
+                XAxis xAxis = pefChart.getXAxis();
+                xAxis.setLabelRotationAngle(-45);
+                xAxis.setValueFormatter(new XAxisDateFormatter(lastMonthDates) {
+                });
+                pefChart.setData(lineData);
+                pefChart.invalidate();
+
+                if(!lastMonthSums.get(0).equals("null")) {
+                    wheezeText.setText(lastMonthSums.get(0) + " Days");
+                } else {
+                    wheezeText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(1).equals("null")) {
+                    coughText.setText(lastMonthSums.get(1) + " Days");
+                } else {
+                    coughText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(2).equals("null")) {
+                    sputmText.setText(lastMonthSums.get(2) + " Days");
+                } else {
+                    sputmText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(3).equals("null")) {
+                    coldText.setText(lastMonthSums.get(3) + " Days");
+                } else {
+                    coldText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(4).equals("null")) {
+                    sleepText.setText(lastMonthSums.get(4) + " Days");
+                } else {
+                    sleepText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(5).equals("null")) {
+                    chestText.setText(lastMonthSums.get(5) + " Days");
+                } else {
+                    chestText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(6).equals("null")) {
+                    shortBreathText.setText(lastMonthSums.get(6) + " Days");
+                } else {
+                    shortBreathText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(7).equals("null")) {
+                    physicalActText.setText(lastMonthSums.get(7) + " Days");
+                } else {
+                    physicalActText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(8).equals("null")) {
+                    nebulizedText.setText(lastTwoMonthSums.get(8) + " Times");
+                } else {
+                    nebulizedText.setText("0 Records");
+                }
+
+
             } else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-                textView.setText("Last Month");
+                textView.setText(lastTwoMonthDates.get(0).replace('-','/')+" - "+lastTwoMonthDates.get(lastTwoMonthDates.size()-1).replace('-', '/')+"");
+
+                LineChart pefChart = (LineChart)rootView.findViewById(R.id.pefChart);
+
+                LineDataSet dataSet = new LineDataSet(entriesTwoMonth, "PEF");
+                dataSet.setDrawCircles(false);
+                LineData lineData = new LineData(dataSet);
+
+                XAxis xAxis = pefChart.getXAxis();
+                xAxis.setLabelRotationAngle(-90);
+                xAxis.setValueFormatter(new XAxisDateFormatter(lastTwoMonthDates) {});
+                pefChart.setData(lineData);
+                pefChart.invalidate();
+
+                if(!lastTwoMonthSums.get(0).equals("null")) {
+                    wheezeText.setText(lastTwoMonthSums.get(0) + " Days");
+                } else {
+                    wheezeText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(1).equals("null")) {
+                    coughText.setText(lastTwoMonthSums.get(1) + " Days");
+                } else {
+                    coughText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(2).equals("null")) {
+                    sputmText.setText(lastTwoMonthSums.get(2) + " Days");
+                } else {
+                    sputmText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(3).equals("null")) {
+                    coldText.setText(lastTwoMonthSums.get(3) + " Days");
+                } else {
+                    coldText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(4).equals("null")) {
+                    sleepText.setText(lastTwoMonthSums.get(4) + " Days");
+                } else {
+                    sleepText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(5).equals("null")) {
+                    chestText.setText(lastTwoMonthSums.get(5) + " Days");
+                } else {
+                    chestText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(6).equals("null")) {
+                    shortBreathText.setText(lastTwoMonthSums.get(6) + " Days");
+                } else {
+                    shortBreathText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(7).equals("null")) {
+                    physicalActText.setText(lastTwoMonthSums.get(7) + " Days");
+                } else {
+                    physicalActText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(8).equals("null")) {
+                    nebulizedText.setText(lastTwoMonthSums.get(8) + " Times");
+                } else {
+                    nebulizedText.setText("0 Records");
+                }
+
+
             } else {
                 textView.setText("Last Three Months");
             }
@@ -165,4 +340,5 @@ public class TrackedData extends AppCompatActivity{
             return null;
         }
     }
+
 }

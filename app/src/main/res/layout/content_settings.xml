@@ -142,27 +142,23 @@
                             android:text="Highest PEF" />
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimaryDark"
-                        android:layout_marginTop="10dp">
-                        <Button
-                            android:textColor="@android:color/white"
-                            android:id="@+id/highestFEVButton"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:layout_span="1"
-                            android:text="Highest FEV-1" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Your Doctors"
+                    android:id="@+id/addDoctorsButton"
+                    android:textColor="@android:color/white"
+                    android:background="?android:attr/selectableItemBackground"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -50,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     Button addAllergyDetailsButton;
     Button addMedicinesButton;
     Button updateButton;
+    Button addDoctorsButton;
 
     RadioGroup radioGroup;
 
@@ -68,12 +69,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         dobText = (TextView)findViewById(R.id.dobText);
         dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-        highestFEVButton = (Button)findViewById(R.id.highestFEVButton);
+        //highestFEVButton = (Button)findViewById(R.id.highestFEVButton);
         highestPEFButton = (Button)findViewById(R.id.highestPeakFlowButton);
         addSharingDetailsButton = (Button)findViewById(R.id.addSharingDetailsButton);
         addAllergyDetailsButton = (Button)findViewById(R.id.addAllergyDetailsButton);
         addMedicinesButton = (Button)findViewById(R.id.addMedicinesButton);
         updateButton = (Button)findViewById(R.id.updateButton);
+        addDoctorsButton = (Button)findViewById(R.id.addDoctorsButton);
 
         firstNameText = (EditText)findViewById(R.id.firstNameUpdateText);
         lastNameText = (EditText)findViewById(R.id.lastNameUpdateText);
@@ -117,6 +119,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 Intent addInhalerActivity = new Intent(SettingsActivity.this, AddInhalersActivity.class);
                 addInhalerActivity.putExtra("userId",userId);
                 startActivity(addInhalerActivity);
+            }
+        });
+
+        addDoctorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addDoctorsActivity = new Intent(SettingsActivity.this, AddDoctorsActivity.class);
+                addDoctorsActivity.putExtra("userId",userId);
+                startActivity(addDoctorsActivity);
             }
         });
 

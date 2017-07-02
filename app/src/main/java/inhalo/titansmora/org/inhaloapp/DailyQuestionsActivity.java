@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class DailyQuestionsActivity extends AppCompatActivity {
     RadioGroup chestRadioGroup;
     RadioGroup slepRadioGroup;
 
+    EditText numberOfNebulizationText;
+
     Button nextButton;
 
     private ProgressDialog progressDialog;
@@ -111,6 +114,8 @@ public class DailyQuestionsActivity extends AppCompatActivity {
         slepRadioGroup = (RadioGroup)findViewById(R.id.sleepRadioGroup);
         shortBreathRadioGroup = (RadioGroup)findViewById(R.id.shortBreathRadioGroup);
         coughRadioGroup = (RadioGroup)findViewById(R.id.coughRadioGroup);
+
+        numberOfNebulizationText = (EditText)findViewById(R.id.nebulizationText);
 
         userId = getIntent().getStringExtra("userId");
 
@@ -199,6 +204,8 @@ public class DailyQuestionsActivity extends AppCompatActivity {
                                     slepRadioGroup.check(noSleepRadio.getId());
                                 }
 
+                                numberOfNebulizationText.setText(jsonObject.getString("nebulized"));
+
                                 isNewRecord = false;
                             }
 
@@ -228,6 +235,7 @@ public class DailyQuestionsActivity extends AppCompatActivity {
 
         if(!isNewRecord) {
             finalURL = HTTPConstants.URL_UPDATE_DATA_BASIC;
+            System.out.println("Oh! Yeah");
         }
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -321,6 +329,7 @@ public class DailyQuestionsActivity extends AppCompatActivity {
                 SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
                 Date now = new Date();
                 String date = sdfDate.format(now);
+                String nebulizations = numberOfNebulizationText.getText().toString();
 
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId);
@@ -333,6 +342,7 @@ public class DailyQuestionsActivity extends AppCompatActivity {
                 params.put("physical_activity", physicalActivity);
                 params.put("bother_sleep", sleep);
                 params.put("date", date);
+                params.put("nebulizations", nebulizations);
                 return params;
             }
         };
