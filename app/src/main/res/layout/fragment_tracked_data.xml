@@ -1,0 +1,246 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="inhalo.titansmora.org.inhaloapp.TrackedData$PlaceholderFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:id="@+id/section_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:id="@+id/pefChart"
+            android:layout_below="@+id/section_label"></com.github.mikephil.charting.charts.LineChart>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="217dp"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Wheeze occured"
+                        android:id="@+id/textView3" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/wheezeText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Cough occured"
+                        android:id="@+id/textView4" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/coughText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Sputum occured"
+                        android:id="@+id/textView5" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/sputumText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Sputum occured"
+                        android:id="@+id/textView6" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/chestText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Couldn't get long breath"
+                        android:id="@+id/textView7" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/shortBreathText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Couldn't do physical Act."
+                        android:id="@+id/textView8" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/physicalAcvitiesText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="Had Cold"
+                        android:id="@+id/textView9" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        
+                        android:text="0 Days"
+                        android:id="@+id/coldText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+
+                        android:text="Bother Sleep"
+                        android:id="@+id/textView10" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        android:text="0 Days"
+                        android:id="@+id/botherSleepText"
+                        android:layout_column="4" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_column="0"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+
+                        android:text="Nebulized"
+                        android:id="@+id/textView11" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+
+                        android:text="0 Times"
+                        android:id="@+id/nebulizedText"
+                        android:layout_column="4" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+
+        <LinearLayout
+        android:layout_alignBottom="@+id/fevChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Report"
+            android:id="@+id/send_report_button"
+            android:textColor="@android:color/white"
+            android:background="?android:attr/selectableItemBackground"/>
+    </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

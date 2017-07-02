@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">InhaloApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_tracked_data">TrackedData</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_highest_flow_measure">HighestFlowMeasure</string>
+    <string name="title_activity_highest_flow">HighestFlow</string>
+    <string name="title_activity_add_sharing_details">AddSharingDetails</string>
+    <string name="title_activity_daily_questions">DailyQuestionsActivity</string>
+</resources>
