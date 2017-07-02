@@ -11,7 +11,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
         <TextView
             android:textSize="18dp"
             android:textStyle="bold"
@@ -29,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="217dp"
             android:id="@+id/scrollView"
-            android:layout_gravity="center_horizontal" >
+            android:layout_weight="0.63">
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                     android:layout_margin="5dp">
 
                     <TextView
-                        android:layout_width="280dp"
+                        android:layout_width="270dp"
                         android:layout_height="wrap_content"
                         
                         android:text="Wheeze occured"
@@ -231,14 +232,16 @@
         android:layout_alignBottom="@+id/fevChart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+            android:visibility="invisible">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Share Report"
             android:id="@+id/send_report_button"
             android:textColor="@android:color/white"
-            android:background="?android:attr/selectableItemBackground"/>
+            android:background="?android:attr/selectableItemBackground"
+            android:visibility="gone" />
     </LinearLayout>
 
     </LinearLayout>

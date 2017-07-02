@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -115,6 +116,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             JSONObject jsonObject = new JSONObject(response);
 
                             Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+
+                            Intent loginActivity = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(loginActivity);
+                            finish();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

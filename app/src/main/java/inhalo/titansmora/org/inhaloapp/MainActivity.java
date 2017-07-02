@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
+                finish();
             }
         });
 
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                                 homeIntent.putExtra("userId", userId);
                                 startActivity(homeIntent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Invaild Username or Password. Try Again", Toast.LENGTH_LONG).show();
                             }
