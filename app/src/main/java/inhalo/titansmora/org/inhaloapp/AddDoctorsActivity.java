@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -48,6 +51,7 @@ public class AddDoctorsActivity extends AppCompatActivity
         setContentView(R.layout.activity_add_doctors);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Select Your Doctor");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,6 +61,12 @@ public class AddDoctorsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         userId = getIntent().getStringExtra("userId");
 
@@ -85,12 +95,6 @@ public class AddDoctorsActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,7 +123,6 @@ public class AddDoctorsActivity extends AppCompatActivity
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 

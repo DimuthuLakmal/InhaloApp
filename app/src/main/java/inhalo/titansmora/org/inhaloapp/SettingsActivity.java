@@ -3,6 +3,7 @@ package inhalo.titansmora.org.inhaloapp;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -73,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Settings");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,6 +84,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         userId = getIntent().getStringExtra("userId");
 
@@ -173,12 +181,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -207,7 +209,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 

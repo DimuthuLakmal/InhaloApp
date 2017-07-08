@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +37,7 @@ public class HighestPEFFlow extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Button saveButton;
+    Button calculateMeasureButton;
 
     EditText bestPEFText;
 
@@ -49,6 +52,7 @@ public class HighestPEFFlow extends AppCompatActivity
         setContentView(R.layout.activity_highest_pef_flow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Your Highest PEF");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,8 +62,15 @@ public class HighestPEFFlow extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         saveButton = (Button)findViewById(R.id.savePEFButton);
+        calculateMeasureButton = (Button)findViewById(R.id.calculateMeasureButton);
 
         bestPEFText = (EditText)findViewById(R.id.highestpefText);
 
@@ -72,6 +83,16 @@ public class HighestPEFFlow extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 addPEFDetails(bestPEFText.getText().toString().split(" ")[0]);
+            }
+        });
+
+        calculateMeasureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameIntent = HighestPEFFlow.this.getPackageManager().getLaunchIntentForPackage("com.Titans.InhaloGame");
+//                gameIntent.setType("text/plain");
+//                gameIntent.putExtra("userId", userId);
+                startActivity(gameIntent);
             }
         });
 
@@ -90,12 +111,6 @@ public class HighestPEFFlow extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -124,7 +139,6 @@ public class HighestPEFFlow extends AppCompatActivity
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 

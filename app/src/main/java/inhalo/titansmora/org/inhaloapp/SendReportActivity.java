@@ -64,12 +64,6 @@ public class SendReportActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -98,7 +92,6 @@ public class SendReportActivity extends AppCompatActivity
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 

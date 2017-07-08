@@ -58,6 +58,7 @@ public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
         final CheckBox inhalerCheckBox = (CheckBox)view.findViewById(R.id.inhalerCheckBox);
         if(list.get(position)[1].equals("true")) {
             inhalerCheckBox.setChecked(true);
+            context.addInhaler(listInhalerName.getText().toString());
         } else {
             inhalerCheckBox.setChecked(false);
         }
@@ -68,7 +69,7 @@ public class AddInhalerAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if (inhalerCheckBox.isChecked()) {
-                    context.addInhalerDetails(listInhalerName.getText().toString());
+                    context.addInhaler(listInhalerName.getText().toString());
                 } else {
                     context.deleteInhalerDetails(listInhalerName.getText().toString());
                 }

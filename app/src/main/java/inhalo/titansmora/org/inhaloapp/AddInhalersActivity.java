@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,13 +48,17 @@ public class AddInhalersActivity extends AppCompatActivity
     ArrayList<String[]> list;
     AddInhalerAdapter adapter;
 
+    EditText puffsText;
+
     String userId;
+    String inhaler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_inhalers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Select Your Inhaler");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,10 +68,19 @@ public class AddInhalersActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         userId = getIntent().getStringExtra("userId");
 
         nextButton = (Button)findViewById(R.id.inhaler_next_button);
+
+        puffsText = (EditText)findViewById(R.id.puffsText);
+
         //generate list
         list = new ArrayList<String[]>();;
         String[] mdi = new String[]{"Metered Dose Inhaler", "false"};
@@ -85,8 +101,9 @@ public class AddInhalersActivity extends AppCompatActivity
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent rescueMedicineIntent = new Intent(AddInhalersActivity.this, AddRescueMedicineActivity.class);
-                startActivity(rescueMedicineIntent);
+//                Intent rescueMedicineIntent = new Intent(AddInhalersActivity.this, AddRescueMedicineActivity.class);
+//                startActivity(rescueMedicineIntent);
+                saveInhalerInDatabase();
             }
         });
 
@@ -103,13 +120,6 @@ public class AddInhalersActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
     }
 
     @Override
@@ -138,7 +148,6 @@ public class AddInhalersActivity extends AppCompatActivity
             Intent history = new Intent(AddInhalersActivity.this, DataGatherActivity.class);
             history.putExtra("userId", userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 
@@ -159,8 +168,7 @@ public class AddInhalersActivity extends AppCompatActivity
         return true;
     }
 
-    public void addInhalerDetails(final String inhaler) {
-
+    public void saveInhalerInDatabase(){
         progressDialog.setMessage("Adding Inhaler Data...");
         progressDialog.show();
 
@@ -194,12 +202,16 @@ public class AddInhalersActivity extends AppCompatActivity
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId);
                 params.put("type", inhaler);
+                params.put("puffs", puffsText.getText().toString());
                 return params;
             }
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
+    public void addInhaler(final String inhaler_) {
+        inhaler = inhaler_;
     }
 
     private void retreiveInhalers() {
@@ -224,6 +236,7 @@ public class AddInhalersActivity extends AppCompatActivity
                                     if(inhaler[0].equals(selectedInhaler.getString("type"))) {
                                         String[] inhalerChecked = new String[]{inhaler[0],"true"};
                                         list.set(index, inhalerChecked);
+                                        puffsText.setText(selectedInhaler.getString("puffs"));
                                     }
                                     index++;
                                 }

@@ -51,27 +51,40 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="289dp"
                 android:id="@+id/inhaler_list" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_alignBottom="@+id/listViewContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:layout_marginTop="20dp"
-            android:visibility="invisible">
-
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Next"
-                android:id="@+id/inhaler_next_button"
-                android:layout_below="@+id/inhaler_list"
-                android:textColor="@android:color/white"
-                android:background="?android:attr/selectableItemBackground"
-                />
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:hint="Number of puffs you need to take"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/puffsText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignBottom="@+id/listViewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="20dp">
+
+                <Button
+                    android:layout_width="355dp"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:id="@+id/inhaler_next_button"
+                    android:layout_below="@+id/inhaler_list"
+                    android:textColor="@android:color/white"
+                    android:background="?android:attr/selectableItemBackground"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

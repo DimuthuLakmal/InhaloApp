@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -52,6 +53,7 @@ public class AddDailyPEFActivity extends AppCompatActivity
         setContentView(R.layout.activity_add_daily_pef);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Add PEF Data");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,6 +63,12 @@ public class AddDailyPEFActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         saveButton = (Button)findViewById(R.id.savePEFButton);
 
@@ -68,7 +76,7 @@ public class AddDailyPEFActivity extends AppCompatActivity
 
         userId = getIntent().getStringExtra("userId");
 
-        if(getIntent().getStringExtra("daily_pef") == null) {
+        if(getIntent().getStringExtra("daily_pef") == null || getIntent().getStringExtra("daily_pef").equals("null")) {
             dailyPEFText.setText(0.0+" l/min");
         } else {
             dailyPEFText.setText(getIntent().getStringExtra("daily_pef")+" l/min");
@@ -100,13 +108,6 @@ public class AddDailyPEFActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -133,7 +134,6 @@ public class AddDailyPEFActivity extends AppCompatActivity
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 

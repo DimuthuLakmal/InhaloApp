@@ -3,6 +3,7 @@ package inhalo.titansmora.org.inhaloapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -70,6 +71,7 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("History");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,6 +81,12 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
         
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -125,7 +133,6 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 
@@ -143,14 +150,6 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tracked_data, menu);
         return true;
     }
 
@@ -208,6 +207,9 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
             TextView shortBreathText = (TextView) rootView.findViewById(R.id.shortBreathText);
             TextView nebulizedText = (TextView) rootView.findViewById(R.id.nebulizedText);
             TextView sleepText = (TextView) rootView.findViewById(R.id.botherSleepText);
+            TextView asthmaAttackText = (TextView) rootView.findViewById(R.id.asthmaAttacksText);
+            TextView wakeupText = (TextView) rootView.findViewById(R.id.wakeupText);
+            TextView allergiesText = (TextView) rootView.findViewById(R.id.allergiesText);
 
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 textView.setText(lastMonthDates.get(0).replace('-','/')+" - "+lastMonthDates.get(lastMonthDates.size()-1).replace('-', '/')+" (Last Month)");
@@ -265,10 +267,25 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
                 } else {
                     physicalActText.setText("0 Records");
                 }
-                if(!lastTwoMonthSums.get(8).equals("null")) {
-                    nebulizedText.setText(lastTwoMonthSums.get(8) + " Times");
+                if(!lastMonthSums.get(8).equals("null")) {
+                    nebulizedText.setText(lastMonthSums.get(8) + " Times");
                 } else {
                     nebulizedText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(9).equals("null")) {
+                    asthmaAttackText.setText(lastMonthSums.get(9) + " Times");
+                } else {
+                    asthmaAttackText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(10).equals("null")) {
+                    wakeupText.setText(lastMonthSums.get(10) + " Times");
+                } else {
+                    wakeupText.setText("0 Records");
+                }
+                if(!lastMonthSums.get(11).equals("null")) {
+                    allergiesText.setText(lastMonthSums.get(11) + " Days");
+                } else {
+                    allergiesText.setText("0 Records");
                 }
 
 
@@ -331,6 +348,21 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
                     nebulizedText.setText(lastTwoMonthSums.get(8) + " Times");
                 } else {
                     nebulizedText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(9).equals("null")) {
+                    asthmaAttackText.setText(lastTwoMonthSums.get(9) + " Times");
+                } else {
+                    asthmaAttackText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(10).equals("null")) {
+                    wakeupText.setText(lastTwoMonthSums.get(10) + " Times");
+                } else {
+                    wakeupText.setText("0 Records");
+                }
+                if(!lastTwoMonthSums.get(11).equals("null")) {
+                    allergiesText.setText(lastTwoMonthSums.get(11) + " Days");
+                } else {
+                    allergiesText.setText("0 Records");
                 }
 
 

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.data.Entry;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +56,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Inhalo");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,6 +66,12 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         dailyPEFText = (TextView)findViewById(R.id.dailypefText);
 
@@ -84,13 +93,6 @@ public class HomeActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
     }
 
     @Override
@@ -128,7 +130,6 @@ public class HomeActivity extends AppCompatActivity
                 System.out.println(e.getX());
             }
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 
@@ -197,6 +198,9 @@ public class HomeActivity extends AppCompatActivity
                                 lastMonthSums.add(sum.getString("sum(short_breath)"));
                                 lastMonthSums.add(sum.getString("sum(physical_activity)"));
                                 lastMonthSums.add(sum.getString("sum(nebulized)"));
+                                lastMonthSums.add(sum.getString("sum(asthma_condition)"));
+                                lastMonthSums.add(sum.getString("sum(times_awake)"));
+                                lastMonthSums.add(sum.getString("sum(allergy)"));
 
                                 endDate = new Date();
 
@@ -216,6 +220,9 @@ public class HomeActivity extends AppCompatActivity
                                 lastTwoMonthSums.add(sum.getString("sum(short_breath)"));
                                 lastTwoMonthSums.add(sum.getString("sum(physical_activity)"));
                                 lastTwoMonthSums.add(sum.getString("sum(nebulized)"));
+                                lastTwoMonthSums.add(sum.getString("sum(asthma_condition)"));
+                                lastTwoMonthSums.add(sum.getString("sum(times_awake)"));
+                                lastTwoMonthSums.add(sum.getString("sum(allergy)"));
 
                                 Calendar cal = Calendar.getInstance();
                                 cal.add(Calendar.MONTH, -1);
@@ -246,7 +253,12 @@ public class HomeActivity extends AppCompatActivity
 
                                     if(data.getString("date").split("T")[0].equals(previousDate)) {
                                         isExistInRecord = true;
-                                        graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), Float.parseFloat(String.valueOf(data.getString("pef")))));
+                                        if(!data.getString("pef").equals("null")) {
+                                            graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), Float.parseFloat(String.valueOf(data.getString("pef")))));
+                                        } else {
+                                            graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), 0.0f));
+                                        }
+
                                     }
                                 }
                                 if(!isExistInRecord) {

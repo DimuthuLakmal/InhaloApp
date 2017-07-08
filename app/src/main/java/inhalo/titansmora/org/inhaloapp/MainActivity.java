@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login");
 
         registerBtn = (Button)findViewById(R.id.signupButton);
         loginBtn = (Button)findViewById(R.id.loginButton);
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
-                finish();
             }
         });
 
@@ -66,13 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         progressDialog = new ProgressDialog(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override
@@ -108,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String userId = jsonObject.getString("userId");
                             if(!userId.equals("null")) {
+                                SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();
+                                editor.putString("username", username);
+                                editor.commit();
+
                                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                                 homeIntent.putExtra("userId", userId);
                                 startActivity(homeIntent);

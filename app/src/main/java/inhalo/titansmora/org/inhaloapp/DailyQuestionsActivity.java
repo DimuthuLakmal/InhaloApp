@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -62,6 +64,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
     RadioButton yesShortBreath;
     RadioButton noShortBreath;
 
+    RadioButton yesAsthmaRadio;
+    RadioButton noAsthmaRadio;
+
+    RadioButton yesAllergyRadio;
+    RadioButton noAllergyRadio;
+
     RadioGroup wheezeRadioGroup;
     RadioGroup coldRadioGroup;
     RadioGroup coughRadioGroup;
@@ -70,8 +78,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
     RadioGroup physicalActivityRadioGroup;
     RadioGroup chestRadioGroup;
     RadioGroup slepRadioGroup;
+    RadioGroup asthmaRadioGroup;
+    RadioGroup allergyGroup;
 
     EditText numberOfNebulizationText;
+    EditText numberOfPuffsText;
+    EditText numberOfWakeupsText;
 
     Button nextButton;
 
@@ -88,6 +100,7 @@ public class DailyQuestionsActivity extends AppCompatActivity
         setContentView(R.layout.activity_daily_questions);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Daily Info");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -97,6 +110,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         yesWheezeRadio = (RadioButton)findViewById(R.id.yesWheeze);
         noWheezeRadio = (RadioButton)findViewById(R.id.noWheeze);
@@ -119,6 +138,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
         yesShortBreath = (RadioButton)findViewById(R.id.yesShortBreath);
         noShortBreath = (RadioButton)findViewById(R.id.noShortBreath);
 
+        yesAsthmaRadio = (RadioButton)findViewById(R.id.yesAsthma);
+        noAsthmaRadio = (RadioButton)findViewById(R.id.noAsthma);
+
+        yesAllergyRadio = (RadioButton)findViewById(R.id.yesAllergy);
+        noAllergyRadio = (RadioButton)findViewById(R.id.noAllergy);
+
         yesPhysicalActivityRadio = (RadioButton)findViewById(R.id.yesPhysicalActivity);
         noPhysicalActivityRadio = (RadioButton)findViewById(R.id.noPhysicalActivity);
 
@@ -130,8 +155,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
         slepRadioGroup = (RadioGroup)findViewById(R.id.sleepRadioGroup);
         shortBreathRadioGroup = (RadioGroup)findViewById(R.id.shortBreathRadioGroup);
         coughRadioGroup = (RadioGroup)findViewById(R.id.coughRadioGroup);
+        asthmaRadioGroup = (RadioGroup)findViewById(R.id.asthamRadioGroup);
+        allergyGroup = (RadioGroup)findViewById(R.id.allergy_exposureRadioGroup);
 
         numberOfNebulizationText = (EditText)findViewById(R.id.nebulizationText);
+        numberOfPuffsText = (EditText)findViewById(R.id.puffsText);
+        numberOfWakeupsText = (EditText)findViewById(R.id.awakeText);
 
         userId = getIntent().getStringExtra("userId");
 
@@ -161,13 +190,6 @@ public class DailyQuestionsActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -194,7 +216,6 @@ public class DailyQuestionsActivity extends AppCompatActivity
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
-            finish();
 
         } else if (id == R.id.nav_settings) {
 
@@ -234,6 +255,16 @@ public class DailyQuestionsActivity extends AppCompatActivity
                             JSONObject jsonObject = new JSONObject(response).getJSONObject("data");
 
                             if(jsonObject != null) {
+
+                                if(!jsonObject.getString("nebulized").equals("null")) {
+                                    numberOfNebulizationText.setText(jsonObject.getString("nebulized"));
+                                }
+                                if(!jsonObject.getString("puffs").equals("null")) {
+                                    numberOfPuffsText.setText(jsonObject.getString("puffs"));
+                                }
+                                if(!jsonObject.getString("times_awake").equals("null")) {
+                                    numberOfWakeupsText.setText(jsonObject.getString("times_awake"));
+                                }
 
                                 daily_pef = jsonObject.getString("pef");
 
@@ -285,7 +316,17 @@ public class DailyQuestionsActivity extends AppCompatActivity
                                     slepRadioGroup.check(noSleepRadio.getId());
                                 }
 
-                                numberOfNebulizationText.setText(jsonObject.getString("nebulized"));
+                                if(jsonObject.getBoolean("asthma_condition")){
+                                    asthmaRadioGroup.check(yesAsthmaRadio.getId());
+                                } else if(!jsonObject.getBoolean("asthma_condition")){
+                                    asthmaRadioGroup.check(noAsthmaRadio.getId());
+                                }
+
+                                if(jsonObject.getBoolean("allergy")){
+                                    allergyGroup.check(yesAllergyRadio.getId());
+                                } else if(!jsonObject.getBoolean("allergy")){
+                                    allergyGroup.check(noAllergyRadio.getId());
+                                }
 
                                 isNewRecord = false;
                             }
@@ -407,10 +448,26 @@ public class DailyQuestionsActivity extends AppCompatActivity
                     physicalActivity = "0";
                 }
 
+                String asthma = "0";
+                if(yesAsthmaRadio.isChecked()) {
+                    asthma = "1";
+                } else if(noAsthmaRadio.isChecked()){
+                    asthma = "0";
+                }
+
+                String allergy = "0";
+                if(yesAllergyRadio.isChecked()) {
+                    allergy = "1";
+                } else if(noAllergyRadio.isChecked()){
+                    allergy = "0";
+                }
+
                 SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
                 Date now = new Date();
                 String date = sdfDate.format(now);
                 String nebulizations = numberOfNebulizationText.getText().toString();
+                String wakeUps = numberOfWakeupsText.getText().toString();
+                String puffs = numberOfPuffsText.getText().toString();
 
                 Map<String, String> params = new HashMap<>();
                 params.put("userId", userId);
@@ -422,8 +479,12 @@ public class DailyQuestionsActivity extends AppCompatActivity
                 params.put("short_breath", shortBreath);
                 params.put("physical_activity", physicalActivity);
                 params.put("bother_sleep", sleep);
+                params.put("asthma_condition", asthma);
                 params.put("date", date);
                 params.put("nebulizations", nebulizations);
+                params.put("times_awake", wakeUps);
+                params.put("puffs", puffs);
+                params.put("allergy", allergy);
                 return params;
             }
         };

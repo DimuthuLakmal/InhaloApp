@@ -95,6 +95,9 @@ public class DataGatherActivity extends AppCompatActivity {
                                 lastMonthSums.add(sum.getString("sum(short_breath)"));
                                 lastMonthSums.add(sum.getString("sum(physical_activity)"));
                                 lastMonthSums.add(sum.getString("sum(nebulized)"));
+                                lastMonthSums.add(sum.getString("sum(asthma_condition)"));
+                                lastMonthSums.add(sum.getString("sum(times_awake)"));
+                                lastMonthSums.add(sum.getString("sum(allergy)"));
 
                                 endDate = new Date();
 
@@ -114,6 +117,9 @@ public class DataGatherActivity extends AppCompatActivity {
                                 lastTwoMonthSums.add(sum.getString("sum(short_breath)"));
                                 lastTwoMonthSums.add(sum.getString("sum(physical_activity)"));
                                 lastTwoMonthSums.add(sum.getString("sum(nebulized)"));
+                                lastTwoMonthSums.add(sum.getString("sum(asthma_condition)"));
+                                lastTwoMonthSums.add(sum.getString("sum(times_awake)"));
+                                lastTwoMonthSums.add(sum.getString("sum(allergy)"));
 
                                 Calendar cal = Calendar.getInstance();
                                 cal.add(Calendar.MONTH, -1);
@@ -144,7 +150,11 @@ public class DataGatherActivity extends AppCompatActivity {
 
                                     if(data.getString("date").split("T")[0].equals(previousDate)) {
                                         isExistInRecord = true;
-                                        graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), Float.parseFloat(String.valueOf(data.getString("pef")))));
+                                        if(!data.getString("pef").equals("null")) {
+                                            graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), Float.parseFloat(String.valueOf(data.getString("pef")))));
+                                        } else {
+                                            graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), 0.0f));
+                                        }
                                     }
                                 }
                                 if(!isExistInRecord) {
