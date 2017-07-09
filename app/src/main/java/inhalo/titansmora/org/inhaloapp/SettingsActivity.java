@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     EditText firstNameText;
     EditText lastNameText;
     EditText heightText;
+    EditText serialText;
     RadioButton maleRadioButton;
     RadioButton femaleRadioButton;
 
@@ -107,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         firstNameText = (EditText)findViewById(R.id.firstNameUpdateText);
         lastNameText = (EditText)findViewById(R.id.lastNameUpdateText);
         heightText = (EditText)findViewById(R.id.heightUpdateText);
+        serialText = (EditText)findViewById(R.id.serialText);
 
         maleRadioButton = (RadioButton)findViewById(R.id.maleUpdateRadio);
         femaleRadioButton = (RadioButton)findViewById(R.id.femaleUpdateRadio);
@@ -222,7 +224,23 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        }else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(SettingsActivity.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(SettingsActivity.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(SettingsActivity.this, MainActivity.class);
+            startActivity(mainActivity);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -272,6 +290,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                             lastNameText.setText(jsonObject.getJSONObject("user").getString("lastname"));
                             heightText.setText(jsonObject.getJSONObject("user").getString("height"));
                             dobText.setText(jsonObject.getJSONObject("user").getString("dob").split("T")[0]);
+                            serialText.setText(jsonObject.getJSONObject("user").getJSONObject("Sensor").getString("serial"));
 
                             bestPEF = jsonObject.getJSONObject("user").getString("best_pef");
 
@@ -304,6 +323,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         final String lastName = lastNameText.getText().toString().trim();
         final String height = heightText.getText().toString().trim();
         final String dob = dobText.getText().toString().trim();
+        final String serial = serialText.getText().toString().trim();
 
         progressDialog.setMessage("Updating user data...");
         progressDialog.show();
@@ -349,6 +369,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 params.put("dob", dob);
                 params.put("height", height);
                 params.put("gender", gender);
+                params.put("serial", serial);
                 return params;
             }
         };

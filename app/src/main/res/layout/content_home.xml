@@ -13,113 +13,266 @@
     tools:context="inhalo.titansmora.org.inhaloapp.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:stateListAnimator="@anim/lift_on_touch"
-            android:clickable="true">
-            <LinearLayout
-                android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_marginTop="0dp"
+                android:layout_height="150dp"
+                card_view:cardCornerRadius="1dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:stateListAnimator="@anim/lift_on_touch"
+                android:clickable="true">
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="92dp"
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/pef"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="5.06 L/min"
-                    android:id="@+id/dailypefText"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_marginTop="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="92dp"
+                        android:id="@+id/imageView2"
+                        android:src="@drawable/pef"/>
 
-        </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
 
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fcv_carview"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:stateListAnimator="@anim/lift_on_touch"
-            android:clickable="true"
-            android:layout_below="@+id/card_view">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_marginTop="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:id="@+id/dailypefText"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="0dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:id="@+id/zoneText"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:id="@+id/calculatePEFLayout"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimaryDark"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone">
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Daily PEF"
+                                android:id="@+id/calculatePEFButton"
+                                android:textColor="@android:color/white"
+                                android:background="?android:attr/selectableItemBackground" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="120dp"
+                            android:id="@+id/calculateHighestPEFLayout"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorPrimaryDark"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone">
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Highest PEF"
+                                android:id="@+id/calculateHighestPEFButton"
+                                android:textColor="@android:color/white"
+                                android:background="?android:attr/selectableItemBackground"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/fcv_carview"
                     android:layout_width="match_parent"
-                    android:layout_height="92dp"
-                    android:id="@+id/fvcimg"
-                    android:src="@drawable/fvc"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="5.06 L/min"
-                    android:id="@+id/fvcText"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/progress_carview"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="4dp"
-            card_view:cardUseCompatPadding="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:stateListAnimator="@anim/lift_on_touch"
-            android:clickable="true"
-            android:layout_below="@+id/fcv_carview">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1"
-                android:background="@drawable/daily_progress">
-                <com.github.lzyzsd.circleprogress.DonutProgress
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/donut_progress"
-                    android:layout_width="150dp"
                     android:layout_height="150dp"
-                    custom:donut_progress="60"
-                    custom:donut_text_color="@android:color/white"
-                    custom:donut_text_size="28dp"/>
+                    card_view:cardCornerRadius="1dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@anim/lift_on_touch"
+                    android:clickable="true"
+                    android:layout_below="@+id/card_view">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_marginTop="0dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="92dp"
+                            android:id="@+id/fvcimg"
+                            android:src="@drawable/fvc"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="5.06 L/min"
+                            android:id="@+id/fvcText"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="146dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editText"
-                    android:text="Daily Progress"
-                    android:textColor="#e5e5e5"
-                    android:textSize="28dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_marginTop="45dp"/>
-            </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/progress_carview"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                card_view:cardCornerRadius="1dp"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:stateListAnimator="@anim/lift_on_touch"
+                android:clickable="true"
+                android:layout_below="@+id/fcv_carview">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="1"
+                    android:background="@drawable/daily_progress">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="146dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/editText"
+                            android:text="Daily Puffs"
+                            android:textColor="#e5e5e5"
+                            android:textSize="28dp"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:layout_marginTop="40dp"
+                            android:layout_weight="0.15" />
+
+                        <com.github.lzyzsd.circleprogress.DonutProgress
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/donut_progress"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            custom:donut_progress="0"
+                            custom:donut_text_color="@android:color/white"
+                            custom:donut_text_size="20dp"
+                            android:layout_marginRight="30dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="146dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView15"
+                            android:text="Today Breathing Exercises Todal Score"
+                            android:textColor="#e5e5e5"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textAlignment="gravity"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.16"
+                            android:layout_marginLeft="20dp" />
+
+                        <TextView
+                            android:layout_width="146dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/totalExerciseScore"
+                            android:textColor="#e5e5e5"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.16"
+                            android:layout_gravity="center_vertical"
+                            android:text="No Record" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="146dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView"
+                            android:text="Today Inhaler Game Total Score"
+                            android:textColor="#e5e5e5"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:textAlignment="gravity"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.16"
+                            android:layout_marginLeft="20dp" />
+
+                        <TextView
+                            android:layout_width="146dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/totalInhalerScore"
+                            android:textColor="#e5e5e5"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.16"
+                            android:layout_gravity="center_vertical"
+                            android:text="No Record" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

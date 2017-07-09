@@ -1,6 +1,7 @@
 package inhalo.titansmora.org.inhaloapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,25 +9,28 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.github.mikephil.charting.data.Entry;
 
-import inhalo.titansmora.org.inhaloapp.adapters.SendReportAdapter;
-
-public class SendReportActivity extends AppCompatActivity
+public class GameActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String userId;
+    Button inhalerGameButton;
+    Button exerciseGameButton;
+    Button pefGameButton;
 
+    private String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_report);
+        setContentView(R.layout.activity_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Play Games");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -36,22 +40,42 @@ public class SendReportActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
 
-        //generate list
-        ArrayList<String[]> list = new ArrayList<String[]>();
-        String[] listData = new String[]{"Dr.Deemantha","deemantha12.@gmail.com","+947128484738"};
-        String[] listData2 = new String[]{"Mr.Kumarasiri","kumarasiri.@gmail.com","+94712432485"};
-        list.add(listData);
-        list.add(listData2);
+        TextView usernameNavText = (TextView)header.findViewById(R.id.usernameNavText);
+        SharedPreferences prefs_ = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs_.getString("username", "User");
+        usernameNavText.setText(username);
 
         userId = getIntent().getStringExtra("userId");
 
-        //instantiate custom adapter
-        SendReportAdapter adapter = new SendReportAdapter(list, this);
+        inhalerGameButton = (Button)findViewById(R.id.inhalerGameButton);
+        exerciseGameButton = (Button)findViewById(R.id.exerciseGameButton);
+        pefGameButton = (Button)findViewById(R.id.pefGameButton);
 
-        //handle listview and assign adapter
-        ListView lView = (ListView)findViewById(R.id.sendReportListView);
-        lView.setAdapter(adapter);
+        inhalerGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameIntent = GameActivity.this.getPackageManager().getLaunchIntentForPackage("com.Titans.InhaloGame");
+                startActivity(gameIntent);
+            }
+        });
+
+        pefGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameIntent = GameActivity.this.getPackageManager().getLaunchIntentForPackage("com.titans.pefhillclimber");
+                startActivity(gameIntent);
+            }
+        });
+
+        exerciseGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameIntent = GameActivity.this.getPackageManager().getLaunchIntentForPackage("com.titans.hillclimber");
+                startActivity(gameIntent);
+            }
+        });
     }
 
     @Override
@@ -88,40 +112,38 @@ public class SendReportActivity extends AppCompatActivity
 
         if (id == R.id.nav_histroy) {
 
-            Intent history = new Intent(SendReportActivity.this, DataGatherActivity.class);
+            Intent history = new Intent(GameActivity.this, DataGatherActivity.class);
             history.putExtra("userId", userId);
             System.out.println(userId);
             startActivity(history);
 
         } else if (id == R.id.nav_settings) {
 
-            Intent settings = new Intent(SendReportActivity.this, SettingsActivity.class);
+            Intent settings = new Intent(GameActivity.this, SettingsActivity.class);
             settings.putExtra("userId", userId);
             startActivity(settings);
 
         } else if (id == R.id.nav_daily_details) {
 
-            Intent dailyDetails = new Intent(SendReportActivity.this, DailyQuestionsActivity.class);
+            Intent dailyDetails = new Intent(GameActivity.this, DailyQuestionsActivity.class);
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
         } else if (id == R.id.nav_home) {
 
-            Intent homeIntent = new Intent(SendReportActivity.this, HomeActivity.class);
+            Intent homeIntent = new Intent(GameActivity.this, HomeActivity.class);
             homeIntent.putExtra("userId", userId);
             startActivity(homeIntent);
-
         } else if (id == R.id.nav_games) {
 
-            Intent homeIntent = new Intent(SendReportActivity.this, GameActivity.class);
+            Intent homeIntent = new Intent(GameActivity.this, GameActivity.class);
             homeIntent.putExtra("userId", userId);
             startActivity(homeIntent);
         } else if (id == R.id.nav_logout) {
 
-            Intent mainActivity = new Intent(SendReportActivity.this, MainActivity.class);
+            Intent mainActivity = new Intent(GameActivity.this, MainActivity.class);
             startActivity(mainActivity);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

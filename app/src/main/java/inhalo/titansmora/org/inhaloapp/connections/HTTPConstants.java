@@ -41,4 +41,6 @@ public class HTTPConstants {
     public static final String URL_RETREIVE_PAST_DATA = ROOT_URL+"dailydata/userId/";
     public static final String URL_RETREIVE_PAST_DATA_FOUR_WEEK = ROOT_URL+"dailydata/fourweeks/userId/";
 
+    public static final String URL_REREIVE_USER_DATA_HOME = ROOT_URL+"dailydata/home/userId/";
+
 }

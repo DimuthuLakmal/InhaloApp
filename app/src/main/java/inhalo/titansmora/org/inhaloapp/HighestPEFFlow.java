@@ -89,7 +89,7 @@ public class HighestPEFFlow extends AppCompatActivity
         calculateMeasureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gameIntent = HighestPEFFlow.this.getPackageManager().getLaunchIntentForPackage("com.Titans.InhaloGame");
+                Intent gameIntent = HighestPEFFlow.this.getPackageManager().getLaunchIntentForPackage("com.titans.pefhillclimber");
 //                gameIntent.setType("text/plain");
 //                gameIntent.putExtra("userId", userId);
                 startActivity(gameIntent);
@@ -152,7 +152,23 @@ public class HighestPEFFlow extends AppCompatActivity
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        } else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(HighestPEFFlow.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(HighestPEFFlow.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(HighestPEFFlow.this, MainActivity.class);
+            startActivity(mainActivity);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

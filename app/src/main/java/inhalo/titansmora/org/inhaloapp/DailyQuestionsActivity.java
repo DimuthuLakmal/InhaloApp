@@ -214,7 +214,6 @@ public class DailyQuestionsActivity extends AppCompatActivity
 
             Intent history = new Intent(DailyQuestionsActivity.this, DataGatherActivity.class);
             history.putExtra("userId", userId);
-            System.out.println(userId);
             startActivity(history);
 
         } else if (id == R.id.nav_settings) {
@@ -229,7 +228,23 @@ public class DailyQuestionsActivity extends AppCompatActivity
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        } else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(DailyQuestionsActivity.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(DailyQuestionsActivity.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(DailyQuestionsActivity.this, MainActivity.class);
+            startActivity(mainActivity);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

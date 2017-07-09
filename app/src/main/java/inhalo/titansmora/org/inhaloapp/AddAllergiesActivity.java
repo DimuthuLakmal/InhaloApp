@@ -159,6 +159,21 @@ public class AddAllergiesActivity extends AppCompatActivity
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        } else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(AddAllergiesActivity.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(AddAllergiesActivity.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(AddAllergiesActivity.this, MainActivity.class);
+            startActivity(mainActivity);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

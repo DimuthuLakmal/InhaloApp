@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText firstNameText;
     EditText lastNameText;
     EditText heightText;
+    EditText serialText;
     RadioButton maleRadioButton;
     RadioButton femaleRadioButton;
 
@@ -63,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         firstNameText = (EditText)findViewById(R.id.firstNameRegText);
         lastNameText = (EditText)findViewById(R.id.lastNameRegText);
         heightText = (EditText)findViewById(R.id.heightRegText);
+        serialText = (EditText)findViewById(R.id.serialText);
 
         maleRadioButton = (RadioButton)findViewById(R.id.maleRegRadio);
         femaleRadioButton = (RadioButton)findViewById(R.id.femaleRegRadio);
@@ -101,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String lastName = lastNameText.getText().toString().trim();
         final String height = heightText.getText().toString().trim();
         final String dob = dobText.getText().toString().trim();
+        final String serial = serialText.getText().toString().trim();
 
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
@@ -151,6 +154,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 params.put("dob", dob);
                 params.put("height", height);
                 params.put("gender", gender);
+                params.put("serial", serial);
                 return params;
             }
         };

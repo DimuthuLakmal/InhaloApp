@@ -146,7 +146,23 @@ public class TrackedData extends AppCompatActivity implements NavigationView.OnN
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        } else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(TrackedData.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(TrackedData.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(TrackedData.this, MainActivity.class);
+            startActivity(mainActivity);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

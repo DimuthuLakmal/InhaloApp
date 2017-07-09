@@ -2,6 +2,7 @@ package inhalo.titansmora.org.inhaloapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.github.mikephil.charting.data.Entry;
 
 import org.json.JSONArray;
@@ -42,6 +46,9 @@ public class HomeActivity extends AppCompatActivity
     private String userId;
 
     TextView dailyPEFText;
+    TextView totalExerciseScore;
+    TextView totalInhalerGameScore;
+    TextView zoneText;
 
     ArrayList<Entry> yAXES = new ArrayList<>();
     ArrayList<Entry> yAXESTwoMonth = new ArrayList<>();
@@ -49,6 +56,11 @@ public class HomeActivity extends AppCompatActivity
     final ArrayList<String> lastTwoMonthDates = new ArrayList<String>();
     final ArrayList<String> lastMonthSums = new ArrayList<String>();
     final ArrayList<String> lastTwoMonthSums = new ArrayList<String>();
+
+    DonutProgress puffsProgress;
+
+    LinearLayout highestPEFLayout;
+    LinearLayout dailyPEFLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +85,42 @@ public class HomeActivity extends AppCompatActivity
         String username = prefs_.getString("username", "User");
         usernameNavText.setText(username);
 
-        dailyPEFText = (TextView)findViewById(R.id.dailypefText);
+        puffsProgress = (DonutProgress)findViewById(R.id.donut_progress);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String dailyPEF = prefs.getString("daily_pef", "0.00");
-        dailyPEFText.setText(dailyPEF+" L/min");
+        dailyPEFText = (TextView)findViewById(R.id.dailypefText);
+        totalExerciseScore = (TextView)findViewById(R.id.totalExerciseScore);
+        totalInhalerGameScore = (TextView)findViewById(R.id.totalInhalerScore);
+        zoneText = (TextView)findViewById(R.id.zoneText);
+
+        dailyPEFLayout = (LinearLayout)findViewById(R.id.calculatePEFLayout);
+        highestPEFLayout = (LinearLayout)findViewById(R.id.calculateHighestPEFLayout);
+
+        Button calculateDailyPEFButton  = (Button)findViewById(R.id.calculatePEFButton);
+        calculateDailyPEFButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dailyDataIntent = new Intent(HomeActivity.this, DailyQuestionsActivity.class);
+                dailyDataIntent.putExtra("userId", userId);
+                startActivity(dailyDataIntent);
+            }
+        });
+
+        Button calculateHighestPEFButton  = (Button)findViewById(R.id.calculateHighestPEFButton);
+        calculateHighestPEFButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent highestPEFIntent = new Intent(HomeActivity.this, HighestPEFFlow.class);
+                highestPEFIntent.putExtra("userId", userId);
+                highestPEFIntent.putExtra("best_pef","0.0");
+                startActivity(highestPEFIntent);
+            }
+        });
 
         userId = getIntent().getStringExtra("userId");
 
         retreiveUserData(HTTPConstants.URL_RETREIVE_PAST_DATA, 0,yAXES, lastMonthDates);
         retreiveUserData(HTTPConstants.URL_RETREIVE_PAST_DATA, 1,yAXESTwoMonth, lastTwoMonthDates);
+        retreiveHomeUserData();
     }
 
     @Override
@@ -143,6 +181,20 @@ public class HomeActivity extends AppCompatActivity
             dailyDetails.putExtra("userId", userId);
             startActivity(dailyDetails);
 
+        } else if (id == R.id.nav_home) {
+
+            Intent homeIntent = new Intent(HomeActivity.this, HomeActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_games) {
+
+            Intent homeIntent = new Intent(HomeActivity.this, GameActivity.class);
+            homeIntent.putExtra("userId", userId);
+            startActivity(homeIntent);
+        } else if (id == R.id.nav_logout) {
+
+            Intent mainActivity = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(mainActivity);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -265,6 +317,100 @@ public class HomeActivity extends AppCompatActivity
                                     graphEntries.add(new Entry(Float.parseFloat(String.valueOf(index)), 0.0f));
                                 }
                                 index++;
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }) {
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    private void retreiveHomeUserData() {
+
+        final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+        Date now = new Date();
+        String date = sdfDate.format(now);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                HTTPConstants.URL_REREIVE_USER_DATA_HOME+userId+"/date/"+date,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if(jsonObject.getBoolean("haveDailyData")) {
+                                JSONObject dailyData = jsonObject.getJSONObject("dailydata");
+                                JSONObject userData = dailyData.getJSONObject("User");
+
+                                if(jsonObject.getBoolean("haveInhalerData")) {
+                                    JSONObject inhalerDetails = jsonObject.getJSONObject("inhalers");
+                                    if(!inhalerDetails.getString("puffs").equals("null") && !dailyData.getString("puffs").equals("null")) {
+                                        double puffs = Double.parseDouble(inhalerDetails.getString("puffs"));
+                                        double dailyPuffs = Double.parseDouble(dailyData.getString("puffs"));
+                                        Double percentage = new Double((dailyPuffs/puffs)*100);
+                                        puffsProgress.setDonut_progress(String.valueOf(percentage.intValue()));
+                                    }
+                                }
+
+                                double dailyPEF = 0;
+                                double highestPEF = 0;
+                                if(dailyData.getString("pef").equals("null")) {
+                                    dailyPEFText.setVisibility(View.GONE);
+                                    zoneText.setVisibility(View.GONE);
+                                    dailyPEFLayout.setVisibility(View.VISIBLE);
+                                }
+                                System.out.println(userData.getString("best_pef"));
+                                if(userData.getString("best_pef").equals("null")) {
+                                    dailyPEFText.setVisibility(View.GONE);
+                                    zoneText.setVisibility(View.GONE);
+                                    highestPEFLayout.setVisibility(View.VISIBLE);
+                                }
+                                if(!userData.getString("best_pef").equals("null") && !dailyData.getString("pef").equals("null")) {
+                                    dailyPEF = dailyData.getDouble("pef");
+                                    highestPEF = userData.getDouble("best_pef");
+                                    double percentagePEF = (dailyPEF/highestPEF)*100;
+                                    String zone = "";
+
+                                    if(percentagePEF >= 80){
+                                        zone = "Green zone (Stable)";
+                                        zoneText.setTextColor(Color.parseColor("#009900"));
+                                    } else if(percentagePEF >=50 && percentagePEF < 80){
+                                        zone = "Yellow zone (caution)";
+                                        zoneText.setTextColor(Color.parseColor("#e8ff1a"));
+                                    } else if(percentagePEF < 50) {
+                                        zone = "Red zone (danger)";
+                                        zoneText.setTextColor(Color.parseColor("#b20000"));
+                                    }
+
+                                    dailyPEFText.setText(String.valueOf(dailyPEF)+" L/min");
+                                    zoneText.setText(zone);
+                                }
+
+                            } else {
+                                dailyPEFText.setVisibility(View.GONE);
+                                dailyPEFLayout.setVisibility(View.VISIBLE);
+                            }
+
+                            if(jsonObject.getBoolean("haveExerciseGameData")) {
+                                JSONObject sumsExercise = jsonObject.getJSONObject("sumsExercise");
+                                totalExerciseScore.setText(sumsExercise.getString("sum(score)"));
+                            }
+                            if(jsonObject.getBoolean("haveInhalerGameData")) {
+                                JSONObject sumsInhalerGame = jsonObject.getJSONObject("sumsInhalerGame");
+                                totalInhalerGameScore.setText(sumsInhalerGame.getString("sum(score)"));
                             }
 
 

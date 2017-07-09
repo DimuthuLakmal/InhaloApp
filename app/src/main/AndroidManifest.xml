@@ -20,8 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
-            android:label="Register"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Register" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -45,9 +46,11 @@
         <activity
             android:name=".AddInhalersActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddAllergiesActivity"
+        <activity
+            android:name=".AddAllergiesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SendReportActivity"
+        <activity
+            android:name=".SendReportActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddRescueMedicineActivity" />
         <activity android:name=".AddControllerMedicineActivity" />
@@ -56,11 +59,15 @@
             android:name=".DailyQuestionsActivity"
             android:label="@string/title_activity_daily_questions"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddDailyPEFActivity"
+        <activity
+            android:name=".AddDailyPEFActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddDoctorsActivity"
+        <activity
+            android:name=".AddDoctorsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DataGatherActivity"></activity>
+        <activity android:name=".DataGatherActivity" />
+        <activity android:name=".GameActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
